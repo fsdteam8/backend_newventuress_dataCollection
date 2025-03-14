@@ -14,4 +14,11 @@ app.use(cors({ origin: '*' }))
 app.use('/api/v1', waitList)
 app.use('/api/v1', newsLetterRouter)
 
+//
+app.get('/', (req, res) => {
+  return res
+    .status(200)
+    .json({ status: 'success', message: 'api hit successfully' })
+})
+
 export default app
