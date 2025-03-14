@@ -7,6 +7,7 @@ const app = express()
 
 // middlewares
 app.use(express.json())
+app.use(express.static('./data'))
 app.use(express.urlencoded({ extended: true }))
 app.use(cors({ origin: '*' }))
 

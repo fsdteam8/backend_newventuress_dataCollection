@@ -2,6 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import WaitList from '../models/waitListModel.js'
+import { sendEmail } from '../utils/sendMail.js'
 
 // Fix for __dirname in ES modules
 const __filename = fileURLToPath(import.meta.url)
@@ -20,6 +21,38 @@ const appendToCSV = (entry) => {
   }
   fs.appendFileSync(csvFilePath, row, { flag: 'a' })
 }
+
+// const sendEmailNotification = async (entry) => {
+//   try {
+//     const transporter = nodemailer.createTransport({
+//       service: 'Gmail', // You can use other services like Outlook, Yahoo, etc.
+//       auth: {
+//         user: 'your-email@gmail.com', // Replace with your email
+//         pass: 'your-email-password', // Use an app password if using Gmail
+//       },
+//     })
+
+//     const mailOptions = {
+//       from: 'your-email@gmail.com',
+//       to: 'work.saif',
+//       subject: 'New Waitlist Entry',
+//       text: `A new entry has been added to the waitlist:\n\n
+//       Full Name: ${entry.fullName}\n
+//       Business Name: ${entry.businessName}\n
+//       Country: ${entry.country}\n
+//       Email: ${entry.email}\n
+//       Social Media: ${entry.socialMediaLink}\n
+//       Phone: ${entry.phoneNumber}\n
+//       Website: ${entry.website}\n
+//       `,
+//     }
+
+//     await transporter.sendMail(mailOptions)
+//     console.log('Email sent successfully!')
+//   } catch (error) {
+//     console.error('Error sending email:', error)
+//   }
+// }
 
 const createWaitlist = async (req, res) => {
   try {
@@ -52,8 +85,19 @@ const createWaitlist = async (req, res) => {
 
     await newEntry.save()
     appendToCSV(newEntry)
+    let data = `
+          Full Name: ${fullName}\n
+          Business Name: ${businessName}\n
+          Country: ${country}\n
+          Email: ${email}\n
+          Social Media: ${socialMediaLink}\n
+          Phone: ${phoneNumber}\n
+          Website: ${website}\n
+          `
 
-    res
+    sendEmail('work.saif9795@gmail.com', 'new entry', data)
+
+    return res
       .status(201)
       .json({ message: 'Successfully added to waitlist', data: newEntry })
   } catch (error) {
