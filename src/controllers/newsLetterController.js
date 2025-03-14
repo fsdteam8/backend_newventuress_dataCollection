@@ -1,6 +1,5 @@
 import Newsletter from '../models/newsLetterModel.js'
-
-const { sendEmail } = require('../service/nodemailerConfig')
+import { sendEmail } from '../utils/sendMail.js'
 
 const addNewsLetter = async (req, res) => {
   try {
@@ -148,7 +147,7 @@ const sendSingleNewsLetter = async (req, res) => {
   }
 }
 
-module.exports = {
+export {
   addNewsLetter,
   getAllNewsLetter,
   getSingleNewsLetter,

@@ -1,5 +1,5 @@
-const nodemailer = require('nodemailer')
-const { mailUser, mailPassword } = require('../config/index.js')
+import nodemailer from 'nodemailer'
+import { mailUser, mailPassword } from '../config/index.js'
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -24,4 +24,4 @@ const sendEmail = async (to, subject, text) => {
   }
 }
 
-module.exports = { sendEmail }
+export { sendEmail }
