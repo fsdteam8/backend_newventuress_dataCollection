@@ -187,7 +187,7 @@ const createWaitlist = async (req, res) => {
     `
 
     sendEmail(
-      'work.saif9795@gmail.com',
+      'info@pacificrimfusion.com',
       'New entry has been added in the waitlist',
       data
     )
