@@ -8,6 +8,9 @@ const waitListSchema = new Schema(
     businessName: {
       type: String,
     },
+    country: {
+      type: String,
+    },
     email: {
       type: String,
     },
